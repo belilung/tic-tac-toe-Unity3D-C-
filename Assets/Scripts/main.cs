@@ -138,15 +138,14 @@ public class main : MonoBehaviour {
     //events on board (any input can be there)
     void eventsOnBoard()
     {
-        int i, j;
-
-        //click on board
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-                if (hit.collider != null)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+            if (hit.collider != null && hit.transform.gameObject.GetComponent<playerChip>() != null)
+            {
+                //click on board
+                if (Input.GetMouseButtonDown(0))
                 {
+                    int i, j;
                     //get row and column of clicked object
                     i = (int)hit.transform.gameObject.GetComponent<playerChip>().getI();
                     j = (int)hit.transform.gameObject.GetComponent<playerChip>().getJ();
@@ -160,11 +159,15 @@ public class main : MonoBehaviour {
                     {
                         setNextMove();
                     }
-                }    
-        }
 
-        
-        
+                }
+
+                if(hit.transform.gameObject.GetComponent<playerChip>().getOwner() != -1)
+                {
+
+                }
+                
+            }
     }
 
     //set up player chip
@@ -181,8 +184,8 @@ public class main : MonoBehaviour {
                 {
                     if (owner == -1)
                     {
-                        currentPlayerChip.GetComponent<playerChip>().setColor(Color.red);
-                        currentPlayerChip.GetComponent<playerChip>().setOwner(0);
+                        currentPlayerChip.GetComponent<playerChip>().setColor(playerMoveState);
+                        currentPlayerChip.GetComponent<playerChip>().setOwner(playerMoveState);
                     } else
                     {
                         Debug.Log("Already own by cross");
@@ -196,8 +199,8 @@ public class main : MonoBehaviour {
                 {
                     if (owner == -1)
                     {
-                        currentPlayerChip.GetComponent<playerChip>().setColor(Color.black);
-                        currentPlayerChip.GetComponent<playerChip>().setOwner(1);
+                        currentPlayerChip.GetComponent<playerChip>().setColor(playerMoveState);
+                        currentPlayerChip.GetComponent<playerChip>().setOwner(playerMoveState);
                     }
                     else
                     {

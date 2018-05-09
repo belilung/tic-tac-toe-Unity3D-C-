@@ -36,9 +36,24 @@ public class playerChip : MonoBehaviour {
         this.j = j;
     }
 
-    public void setColor(Color color)
+    public void setColor(int playerMoveState)
     {
-        this.GetComponent<Renderer>().material.color = color;
+        switch (playerMoveState)
+        {
+            //noncross player
+            case 0:
+                {
+                    this.GetComponent<Renderer>().material.color = Color.red;
+                    break;
+                }
+            //cross player
+            case 1:
+                {
+                    this.GetComponent<Renderer>().material.color = Color.black;
+                    break;
+                }
+        }
+        
     }
 
     //getter block
